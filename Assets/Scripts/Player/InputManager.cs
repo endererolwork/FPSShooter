@@ -10,7 +10,7 @@ public class InputManager : MonoBehaviour
 
     private PlayerInput playerInput;
     private PlayerMovement movement;
-    private PlayerInput.OnFootActions onFoot;
+    public PlayerInput.OnFootActions onFoot;
 
     private PlayerLook playerLook;
     // Start is called before the first frame update
