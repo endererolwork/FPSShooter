@@ -13,11 +13,11 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f;
     private bool isGrounded;
     public float gravity = -9.8f;
-    private bool crouching = false;
+    private bool crouching ;
     private float crouchTimer = 1;
-    private bool lerpCrouch = false;
-    private bool sprinting = false;
-    public float jumpHeight = 3f;
+    private bool lerpCrouch ;
+    private bool sprinting ;
+    public float jumpHeight = 1.4f;
 
 
     private void Start()
@@ -29,6 +29,28 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         isGrounded = controller.isGrounded;
+
+        if (lerpCrouch)
+        {
+            crouchTimer += Time.deltaTime;
+            float var = crouchTimer / 1;
+            var *= var;
+
+            if (crouching)
+            {
+                controller.height = Mathf.Lerp(controller.height, 1, var);
+            }
+            else
+            {
+                controller.height = Mathf.Lerp(controller.height, 2, var);
+            }
+
+            if (var > 1)
+            {
+                lerpCrouch = false;
+                crouchTimer = 0f;
+            }
+        }
     }
 
     public void ProcessMove(Vector2 input)
@@ -43,6 +65,29 @@ public class PlayerMovement : MonoBehaviour
             playerVelocity.y = -2f;
         controller.Move((playerVelocity * Time.deltaTime));
         
+    }
+
+    public void Crouch()
+    {
+        crouching = !crouching;
+        crouchTimer = 0;
+        lerpCrouch = true;
+        Debug.Log(("Crouching"));
+    }
+
+    public void Sprint()
+    {
+        sprinting = !sprinting;
+        if (sprinting)
+        {
+            speed = speed + 3;
+            Debug.Log((speed));
+        }
+        else
+        {
+            speed = 5f;
+            Debug.Log((speed));
+        }
     }
 
     public void Jump()

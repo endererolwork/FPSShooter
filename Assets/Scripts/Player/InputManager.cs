@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,8 @@ public class InputManager : MonoBehaviour
     private PlayerInput playerInput;
     private PlayerMovement movement;
     private PlayerInput.OnFootActions onFoot;
+
+    private PlayerLook playerLook;
     // Start is called before the first frame update
     void Awake()
     {
@@ -17,11 +20,21 @@ public class InputManager : MonoBehaviour
         onFoot = playerInput.OnFoot;
         movement = GetComponent<PlayerMovement>();
         onFoot.Jump.performed += ctx => movement.Jump();
+        playerLook = GetComponent<PlayerLook>();
+
+        onFoot.Crouch.performed += ctx => movement.Crouch();
+        onFoot.Sprint.performed += ctx => movement.Sprint();
+
     }
 
     private void FixedUpdate()
     {
         movement.ProcessMove(onFoot.Movement.ReadValue<Vector2>());
+    }
+
+    private void LateUpdate()
+    {
+        playerLook.ProcessLook(onFoot.Look.ReadValue<Vector2>());
     }
 
     private void OnEnable()
