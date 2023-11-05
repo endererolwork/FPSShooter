@@ -8,28 +8,25 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
 {
-    
-   private float health;
-   private float lerpTimer;
-   [Header("Health Bar")]
-   public int maxHealth = 100;
-   public float chipSpeed = 2f;
-   public Image frontHealthBar;
-   public Image backHealthBar;
-   public TextMeshProUGUI healthText;
+    private float health;
+    private float lerpTimer;
+    [Header("Health Bar")] public int maxHealth = 100;
+    public float chipSpeed = 2f;
+    public Image frontHealthBar;
+    public Image backHealthBar;
+    public TextMeshProUGUI healthText;
 
-   [Header("Damage BG")] 
-   public Image overlay;
-   public float duration;
-   public float fadeSpeed;
+    [Header("Damage BG")] public Image overlay;
+    public float duration;
+    public float fadeSpeed;
 
-   private float durationTimer;  //duration checker
+    private float durationTimer; //duration checker
 
-   public void Start()
-   {
-      health = maxHealth;
-      overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0);
-   }
+    public void Start()
+    {
+        health = maxHealth;
+        overlay.color = new Color(overlay.color.r, overlay.color.g, overlay.color.b, 0);
+    }
 
     public void Update()
     {
@@ -64,18 +61,19 @@ public class PlayerHealth : MonoBehaviour
             float percentComplete = lerpTimer / chipSpeed;
             percentComplete = percentComplete * percentComplete;
             backHealthBar.fillAmount = Mathf.Lerp(fillBack, hFraction, percentComplete);
-            if (fillFront < hFraction)
-            {
-                backHealthBar.color = Color.green;
-                backHealthBar.fillAmount = hFraction;
-                lerpTimer += Time.deltaTime;
-                 float PercentComplete = lerpTimer / chipSpeed;
-                 PercentComplete = PercentComplete * PercentComplete;
-                frontHealthBar.fillAmount = Mathf.Lerp(fillFront, backHealthBar.fillAmount, percentComplete);
-            }
-
-            healthText.text = health + "/" + maxHealth;
         }
+
+        if (fillFront < hFraction)
+        {
+            backHealthBar.color = Color.green;
+            backHealthBar.fillAmount = hFraction;
+            lerpTimer += Time.deltaTime;
+            float percentComplete = lerpTimer / chipSpeed;
+            percentComplete = percentComplete * percentComplete;
+            frontHealthBar.fillAmount = Mathf.Lerp(fillFront, backHealthBar.fillAmount, percentComplete);
+        }
+
+        healthText.text = health + "/" + maxHealth;
     }
 
     public void TakeDamage(float damage)
@@ -90,7 +88,6 @@ public class PlayerHealth : MonoBehaviour
     {
         health += healAmount;
         lerpTimer = 0f;
-        Debug.Log("girdim" + health);
-
+        
     }
 }

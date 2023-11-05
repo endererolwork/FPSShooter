@@ -293,3 +293,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 503a4df847759794daab7e44ee5cd82a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
+  chipSpeed: 2
+  frontHealthBar: {fileID: 0}
+  backHealthBar: {fileID: 0}
+  healthText: {fileID: 0}
+  overlay: {fileID: 0}
+  duration: 2
+  fadeSpeed: 1.5
