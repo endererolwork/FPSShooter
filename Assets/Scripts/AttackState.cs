@@ -7,7 +7,7 @@ public class AttackState : BaseState
     private float moveTimer;
     private float losePlayerTimer;
 
-    public float bulletSpeed = 40;
+    public float bulletSpeed = 70;
 
     private float shotTimer;
     public override void Enter()
@@ -32,14 +32,16 @@ public class AttackState : BaseState
                 enemy.Agent.SetDestination(enemy.transform.position + (Random.insideUnitSphere * 5));
                 moveTimer = 0;
             }
+
+            enemy.LastKnownPos = enemy.Player.transform.position;
         }
-        else
+        else //lost sight of player it turns Patrol
         {
             losePlayerTimer += Time.deltaTime;
             if (losePlayerTimer > 8)
             {
                 //change to search state for enemy.
-                stateMachine.ChangeState(new PatrolState());
+                stateMachine.ChangeState(new SearchState());
             }
 
         }
@@ -55,13 +57,13 @@ public class AttackState : BaseState
         GameObject bullet = GameObject.Instantiate(Resources.Load("Prefabs/Bullet") as GameObject, gunbarrel.position, enemy.transform.rotation);
         
         Vector3 shootDriection = (enemy.Player.transform.position - gunbarrel.transform.position).normalized;
-        bullet.GetComponent<Rigidbody>().velocity = shootDriection * bulletSpeed;
+        bullet.GetComponent<Rigidbody>().velocity = Quaternion.AngleAxis(Random.Range(-3f,3f), Vector3.up)* shootDriection * bulletSpeed;
         Debug.Log(("Shoot"));
         shotTimer = 0;
     }
 
     public override void Exit()
     {
-        ;
+        
     }
 }

@@ -6,24 +6,31 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-
     private CharacterController controller;
 
     private Vector3 playerVelocity;
     public float speed = 5f;
     private bool isGrounded;
     public float gravity = -9.8f;
-    private bool crouching ;
+    private bool crouching;
     private float crouchTimer = 1;
-    private bool lerpCrouch ;
-    private bool sprinting ;
+    private bool lerpCrouch;
+    private bool sprinting;
     public float jumpHeight = 1.4f;
+    public Transform gunBarrel;
 
+    public Enemy enemy;
+    private PlayerUI playerUI;
+
+    public void Awake()
+    {
+        enemy = GetComponent<Enemy>();
+    }
 
     private void Start()
     {
         controller = GetComponent<CharacterController>();
-        
+        playerUI = GetComponent<PlayerUI>();
     }
 
     private void Update()
@@ -64,7 +71,6 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && playerVelocity.y < 0)
             playerVelocity.y = -2f;
         controller.Move((playerVelocity * Time.deltaTime));
-        
     }
 
     public void Crouch()
@@ -95,6 +101,29 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded)
         {
             playerVelocity.y = Mathf.Sqrt(jumpHeight * -3.0f * gravity);
+        }
+    }
+
+    public void Shoot()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance,
+                Color.yellow);
+            Debug.Log("Did Hit");
+
+
+            if (hit.collider.CompareTag("Enemy"))
+            {
+                Enemy enemy = hit.collider.GetComponentInParent<Enemy>();
+                enemy.EnemyDie();
+            }
+        }
+        else
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 1000, Color.white);
+            Debug.Log("Did not Hit");
         }
     }
 }

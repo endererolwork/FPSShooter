@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour
 
     private NavMeshAgent agent;
 
+    private LevelSystem ls;
     public NavMeshAgent Agent
     {
         get => agent;
@@ -17,7 +18,11 @@ public class Enemy : MonoBehaviour
     [SerializeField] private string currentState;
 
     public PathAI path;
-
+    private Vector3 lastKnownPos;
+    public Vector3 LastKnownPos
+    {
+        get => lastKnownPos; set => lastKnownPos = value;
+    }
     public GameObject Player
     {
         get => player;
@@ -41,6 +46,8 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         stateMachine.Initialise();
         player = GameObject.FindGameObjectWithTag("Player");
+        ls = GetComponent<LevelSystem>();
+      
     }
 
     // Update is called once per frame
@@ -77,4 +84,11 @@ public class Enemy : MonoBehaviour
 
         return false;
     }
+
+    public void EnemyDie()
+    {
+        ls.GainExp(10);
+        Destroy(this.gameObject);
+    }
+    
 }

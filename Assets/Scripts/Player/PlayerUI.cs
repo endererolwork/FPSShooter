@@ -8,11 +8,12 @@ public class PlayerUI : MonoBehaviour
 
     public TextMeshProUGUI promptText;
     
-    
-   
 
     public void UpdateText(string promptmassage)
     {
         promptText.text = promptmassage;
     }
+    
+   
+    
 }

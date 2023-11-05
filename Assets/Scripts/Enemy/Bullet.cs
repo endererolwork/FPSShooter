@@ -14,6 +14,6 @@ public class Bullet : MonoBehaviour
             Debug.Log(("hit player"));
             hitTransform.GetComponent<PlayerHealth>().TakeDamage(10);
         }
-        Destroy(gameObject);
+        
     }
 }

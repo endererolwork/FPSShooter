@@ -10,7 +10,7 @@ public class PlayerHealth : MonoBehaviour
 {
     private float health;
     private float lerpTimer;
-    [Header("Health Bar")] public int maxHealth = 100;
+    [Header("Health Bar")] public float maxHealth = 100;
     public float chipSpeed = 2f;
     public Image frontHealthBar;
     public Image backHealthBar;
@@ -21,7 +21,9 @@ public class PlayerHealth : MonoBehaviour
     public float fadeSpeed;
 
     private float durationTimer; //duration checker
-
+    
+    
+    
     public void Start()
     {
         health = maxHealth;
@@ -73,7 +75,7 @@ public class PlayerHealth : MonoBehaviour
             frontHealthBar.fillAmount = Mathf.Lerp(fillFront, backHealthBar.fillAmount, percentComplete);
         }
 
-        healthText.text = health + "/" + maxHealth;
+        healthText.text = Mathf.Round(health) + "/" + Mathf.Round(maxHealth);
     }
 
     public void TakeDamage(float damage)
@@ -89,5 +91,11 @@ public class PlayerHealth : MonoBehaviour
         health += healAmount;
         lerpTimer = 0f;
         
+    }
+
+    public void IncreaseHealth(int level)
+    {
+        maxHealth += (health * 0.01f) * ((100 - level) * 0.1f);
+        health = maxHealth;
     }
 }
