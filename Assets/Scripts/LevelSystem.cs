@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -20,11 +21,20 @@ public class LevelSystem : MonoBehaviour
 
     public TextMeshProUGUI levelText;
     public TextMeshProUGUI xpText;
+    public TextMeshProUGUI talentText;
+
+    public int talentPoints = 0;
+    public GameObject[] buttons;
     public void Start()
     {
         frontXPBar.fillAmount = currentXP / requiredXP;
         backXpBar.fillAmount = currentXP / requiredXP;
         levelText.text = "Level " + level;
+
+        foreach (GameObject button in buttons)
+        {
+            button.SetActive(false);
+        }
     }
 
     public void Update()
@@ -33,6 +43,22 @@ public class LevelSystem : MonoBehaviour
         if (currentXP > requiredXP)
         {
             LevelUp();
+        }
+
+        if (talentPoints > 0)
+        {
+            foreach (GameObject button in buttons)
+            {
+                button.SetActive(true);
+            }
+            
+        }
+        else
+        {
+            foreach (GameObject button in buttons)
+            {
+                button.SetActive(false);
+            }
         }
     }
 
@@ -72,5 +98,13 @@ public class LevelSystem : MonoBehaviour
         GetComponent<PlayerHealth>().IncreaseHealth(level);
         GetComponent<PlayerAttack>().IncreaseMaxAmmo();
         levelText.text = "Level " + level;
+        talentPoints++;
+        talentText.text = "Talent Points : " + talentPoints;
+        
+    }
+
+    public void DecrementTalentPoints()
+    {
+        talentPoints--;
     }
 }

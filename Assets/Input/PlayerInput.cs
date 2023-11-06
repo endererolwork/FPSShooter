@@ -98,6 +98,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""TalentSystem"",
+                    ""type"": ""Button"",
+                    ""id"": ""3c9e11c1-1109-43e2-8c89-313295ecbdda"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -230,6 +239,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""PierceShot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f2e03720-43d9-407c-b03b-3ec4e60d2903"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""TalentSystem"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -764,6 +784,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_OnFoot_Interact = m_OnFoot.FindAction("Interact", throwIfNotFound: true);
         m_OnFoot_Shoot = m_OnFoot.FindAction("Shoot", throwIfNotFound: true);
         m_OnFoot_PierceShot = m_OnFoot.FindAction("PierceShot", throwIfNotFound: true);
+        m_OnFoot_TalentSystem = m_OnFoot.FindAction("TalentSystem", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -845,6 +866,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnFoot_Interact;
     private readonly InputAction m_OnFoot_Shoot;
     private readonly InputAction m_OnFoot_PierceShot;
+    private readonly InputAction m_OnFoot_TalentSystem;
     public struct OnFootActions
     {
         private @PlayerInput m_Wrapper;
@@ -857,6 +879,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Interact => m_Wrapper.m_OnFoot_Interact;
         public InputAction @Shoot => m_Wrapper.m_OnFoot_Shoot;
         public InputAction @PierceShot => m_Wrapper.m_OnFoot_PierceShot;
+        public InputAction @TalentSystem => m_Wrapper.m_OnFoot_TalentSystem;
         public InputActionMap Get() { return m_Wrapper.m_OnFoot; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -890,6 +913,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @PierceShot.started += instance.OnPierceShot;
             @PierceShot.performed += instance.OnPierceShot;
             @PierceShot.canceled += instance.OnPierceShot;
+            @TalentSystem.started += instance.OnTalentSystem;
+            @TalentSystem.performed += instance.OnTalentSystem;
+            @TalentSystem.canceled += instance.OnTalentSystem;
         }
 
         private void UnregisterCallbacks(IOnFootActions instance)
@@ -918,6 +944,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @PierceShot.started -= instance.OnPierceShot;
             @PierceShot.performed -= instance.OnPierceShot;
             @PierceShot.canceled -= instance.OnPierceShot;
+            @TalentSystem.started -= instance.OnTalentSystem;
+            @TalentSystem.performed -= instance.OnTalentSystem;
+            @TalentSystem.canceled -= instance.OnTalentSystem;
         }
 
         public void RemoveCallbacks(IOnFootActions instance)
@@ -1063,6 +1092,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnInteract(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
         void OnPierceShot(InputAction.CallbackContext context);
+        void OnTalentSystem(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

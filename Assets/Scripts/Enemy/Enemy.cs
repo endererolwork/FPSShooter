@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
 
     public void EnemyDie()
     {
-        ls.GainExp(10);
+        ls.GainExp(50);
         gameObject.SetActive(false);
 
         Invoke("RespawnEnemy", 5f);
@@ -105,6 +105,6 @@ public class Enemy : MonoBehaviour
     private void RespawnEnemy()
     {
         gameObject.SetActive(true);
-        transform.position = spawnPoint; // veya istediğiniz SpawnPoint'e göre belirleyebilirsiniz
+        transform.position = spawnPoint; 
     }
 }

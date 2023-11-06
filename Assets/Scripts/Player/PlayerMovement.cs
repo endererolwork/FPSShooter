@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,11 +17,15 @@ public class PlayerMovement : MonoBehaviour
     private float crouchTimer = 1;
     private bool lerpCrouch;
     private bool sprinting;
+    public float sprintSpeed;
     public float jumpHeight = 1.4f;
     public Transform gunBarrel;
 
     public Enemy enemy;
     private PlayerUI playerUI;
+
+    public GameObject TalentUI;
+    private LevelSystem levelSystem;
 
     public void Awake()
     {
@@ -31,6 +36,7 @@ public class PlayerMovement : MonoBehaviour
     {
         controller = GetComponent<CharacterController>();
         playerUI = GetComponent<PlayerUI>();
+        levelSystem = GetComponent<LevelSystem>();
     }
 
     private void Update()
@@ -88,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
         sprinting = !sprinting;
         if (sprinting)
         {
-            speed = speed + 3;
+            sprintSpeed = speed + 3;
             Debug.Log((speed));
         }
         else
@@ -134,6 +140,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void PierceShot()
     {
+        if (levelSystem.level < 3)
+        {
+            return; // Check level 
+        }
         RaycastHit[] hits;
         float rayDistance = 100f;
         Vector3 direction = transform.forward;
@@ -154,5 +164,25 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void TalentSystem()
+    {
+        TalentUI.GameObject().SetActive(true);
+    }
+
+    public void IncreaseJumpHeight()
+    {
+        jumpHeight = jumpHeight + 0.2f;
+    }
+
+    public void IncreaseSprintSpeed()
+    {
+        sprintSpeed++;
+    }
+
+    public void IncreaseMovementSpeed()
+    {
+        speed++;
     }
 }
