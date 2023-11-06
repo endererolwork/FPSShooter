@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -10,6 +11,9 @@ public class Enemy : MonoBehaviour
     private NavMeshAgent agent;
 
     public LevelSystem ls;
+
+    public Vector3 spawnPoint;
+
     public NavMeshAgent Agent
     {
         get => agent;
@@ -19,10 +23,13 @@ public class Enemy : MonoBehaviour
 
     public PathAI path;
     private Vector3 lastKnownPos;
+
     public Vector3 LastKnownPos
     {
-        get => lastKnownPos; set => lastKnownPos = value;
+        get => lastKnownPos;
+        set => lastKnownPos = value;
     }
+
     public GameObject Player
     {
         get => player;
@@ -33,12 +40,14 @@ public class Enemy : MonoBehaviour
     public float fieldOfView = 85f;
     public float eyeHeight;
 
-    [Header("Weapon Values")] 
-    public Transform gunBarrel;
-    [Range(0.1f, 10f)]
-    public float fireRate;
-    
-    
+    [Header("Weapon Values")] public Transform gunBarrel;
+    [Range(0.1f, 10f)] public float fireRate;
+    public float respawnTime = 2f;
+
+
+    private EnemyList enemyList;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,8 +55,7 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         stateMachine.Initialise();
         player = GameObject.FindGameObjectWithTag("Player");
-        
-      
+        enemyList = GetComponent<EnemyList>();
     }
 
     // Update is called once per frame
@@ -88,7 +96,15 @@ public class Enemy : MonoBehaviour
     public void EnemyDie()
     {
         ls.GainExp(10);
-        Destroy(this.gameObject);
+        gameObject.SetActive(false);
+
+        Invoke("RespawnEnemy", 5f);
     }
-    
+
+
+    private void RespawnEnemy()
+    {
+        gameObject.SetActive(true);
+        transform.position = spawnPoint; // veya istediğiniz SpawnPoint'e göre belirleyebilirsiniz
+    }
 }

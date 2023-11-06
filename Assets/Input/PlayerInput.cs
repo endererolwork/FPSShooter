@@ -89,6 +89,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""PierceShot"",
+                    ""type"": ""Button"",
+                    ""id"": ""1dc1324b-a431-40a9-abab-0d33e8c814bd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -210,6 +219,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Shoot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""65a13cc7-1366-48c4-8125-211ddb300310"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PierceShot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -743,6 +763,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_OnFoot_Look = m_OnFoot.FindAction("Look", throwIfNotFound: true);
         m_OnFoot_Interact = m_OnFoot.FindAction("Interact", throwIfNotFound: true);
         m_OnFoot_Shoot = m_OnFoot.FindAction("Shoot", throwIfNotFound: true);
+        m_OnFoot_PierceShot = m_OnFoot.FindAction("PierceShot", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -823,6 +844,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_OnFoot_Look;
     private readonly InputAction m_OnFoot_Interact;
     private readonly InputAction m_OnFoot_Shoot;
+    private readonly InputAction m_OnFoot_PierceShot;
     public struct OnFootActions
     {
         private @PlayerInput m_Wrapper;
@@ -834,6 +856,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Look => m_Wrapper.m_OnFoot_Look;
         public InputAction @Interact => m_Wrapper.m_OnFoot_Interact;
         public InputAction @Shoot => m_Wrapper.m_OnFoot_Shoot;
+        public InputAction @PierceShot => m_Wrapper.m_OnFoot_PierceShot;
         public InputActionMap Get() { return m_Wrapper.m_OnFoot; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -864,6 +887,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Shoot.started += instance.OnShoot;
             @Shoot.performed += instance.OnShoot;
             @Shoot.canceled += instance.OnShoot;
+            @PierceShot.started += instance.OnPierceShot;
+            @PierceShot.performed += instance.OnPierceShot;
+            @PierceShot.canceled += instance.OnPierceShot;
         }
 
         private void UnregisterCallbacks(IOnFootActions instance)
@@ -889,6 +915,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @Shoot.started -= instance.OnShoot;
             @Shoot.performed -= instance.OnShoot;
             @Shoot.canceled -= instance.OnShoot;
+            @PierceShot.started -= instance.OnPierceShot;
+            @PierceShot.performed -= instance.OnPierceShot;
+            @PierceShot.canceled -= instance.OnPierceShot;
         }
 
         public void RemoveCallbacks(IOnFootActions instance)
@@ -1033,6 +1062,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnLook(InputAction.CallbackContext context);
         void OnInteract(InputAction.CallbackContext context);
         void OnShoot(InputAction.CallbackContext context);
+        void OnPierceShot(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {

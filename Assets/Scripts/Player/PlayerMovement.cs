@@ -131,4 +131,28 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log("Did not Hit");
         }
     }
+
+    public void PierceShot()
+    {
+        RaycastHit[] hits;
+        float rayDistance = 100f;
+        Vector3 direction = transform.forward;
+
+        hits = Physics.RaycastAll(transform.position, direction, rayDistance);
+
+        Debug.DrawRay(transform.position, direction * rayDistance, Color.cyan, 1f);
+
+        foreach (RaycastHit hit in hits)
+        {
+            if (hit.collider.CompareTag("Enemy"))
+            {
+                Enemy enemy = hit.collider.GetComponentInParent<Enemy>();
+                if (enemy != null)
+                {
+                    enemy.EnemyDie();
+                    GetComponent<PlayerAttack>().DecrementPierceShot();
+                }
+            }
+        }
+    }
 }

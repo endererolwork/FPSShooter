@@ -144,6 +144,7 @@ GameObject:
   - component: {fileID: 4999998813883471809}
   - component: {fileID: 206813466418008777}
   - component: {fileID: 6220289172808893711}
+  - component: {fileID: 4836945769611862927}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -337,6 +338,7 @@ MonoBehaviour:
   overlay: {fileID: 0}
   duration: 2
   fadeSpeed: 1.5
+  panel: {fileID: 0}
 --- !u!114 &6220289172808893711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,11 +353,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   level: 1
   currentXP: 0
-  requiredXP: 30
+  requiredXP: 100
   frontXPBar: {fileID: 0}
   backXpBar: {fileID: 0}
   levelText: {fileID: 0}
   xpText: {fileID: 0}
+--- !u!114 &4836945769611862927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5161844796728258534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03376f2164773624ea6d28bcf8ddad4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ammoText: {fileID: 0}
+  pierceShotText: {fileID: 0}
+  gunDMG: 50
+  ammoMax: 20
+  currentAmmo: 15
+  pierceShot: 1
+  pierceCooldown: 30
 --- !u!1001 &5658747931070700810
 PrefabInstance:
   m_ObjectHideFlags: 0

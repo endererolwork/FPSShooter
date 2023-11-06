@@ -25,6 +25,7 @@ public class InputManager : MonoBehaviour
         onFoot.Crouch.performed += ctx => movement.Crouch();
         onFoot.Sprint.performed += ctx => movement.Sprint();
         onFoot.Shoot.performed += ctx => movement.Shoot();
+        onFoot.PierceShot.performed += ctx => movement.PierceShot();
     }   
 
     private void FixedUpdate()
