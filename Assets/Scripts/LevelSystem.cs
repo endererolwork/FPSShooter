@@ -70,5 +70,7 @@ public class LevelSystem : MonoBehaviour
         backXpBar.fillAmount = 0f;
         currentXP = Mathf.RoundToInt(currentXP - requiredXP);
         GetComponent<PlayerHealth>().IncreaseHealth(level);
+        GetComponent<PlayerAttack>().IncreaseMaxAmmo();
+        levelText.text = "Level " + level;
     }
 }

@@ -9,7 +9,7 @@ public class Enemy : MonoBehaviour
 
     private NavMeshAgent agent;
 
-    private LevelSystem ls;
+    public LevelSystem ls;
     public NavMeshAgent Agent
     {
         get => agent;
@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         stateMachine.Initialise();
         player = GameObject.FindGameObjectWithTag("Player");
-        ls = GetComponent<LevelSystem>();
+        
       
     }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net.Mime;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour
@@ -21,6 +22,7 @@ public class PlayerHealth : MonoBehaviour
     public float fadeSpeed;
 
     private float durationTimer; //duration checker
+    public GameObject panel;
     
     
     
@@ -32,6 +34,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void Update()
     {
+        if (health == 0)
+        {
+            panel.gameObject.SetActive(true);
+        }
+        
         health = Mathf.Clamp(health, 0, maxHealth);
         UpdateHealthUI();
         if (overlay.color.a > 0)
@@ -97,5 +104,10 @@ public class PlayerHealth : MonoBehaviour
     {
         maxHealth += (health * 0.01f) * ((100 - level) * 0.1f);
         health = maxHealth;
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

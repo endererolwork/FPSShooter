@@ -58,6 +58,8 @@ public class PlayerMovement : MonoBehaviour
                 crouchTimer = 0f;
             }
         }
+        
+        
     }
 
     public void ProcessMove(Vector2 input)
@@ -107,6 +109,8 @@ public class PlayerMovement : MonoBehaviour
     public void Shoot()
     {
         RaycastHit hit;
+        
+        
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance,
@@ -118,6 +122,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 Enemy enemy = hit.collider.GetComponentInParent<Enemy>();
                 enemy.EnemyDie();
+                GetComponent<PlayerAttack>().DecrementAmmo();
             }
         }
         else
