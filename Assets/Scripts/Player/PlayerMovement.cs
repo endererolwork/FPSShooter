@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private float crouchTimer = 1;
     private bool lerpCrouch;
     private bool sprinting;
-    public float sprintSpeed;
+    public float sprintSpeed = 8f;
     public float jumpHeight = 1.4f;
     public Transform gunBarrel;
 
@@ -94,7 +94,7 @@ public class PlayerMovement : MonoBehaviour
         sprinting = !sprinting;
         if (sprinting)
         {
-            sprintSpeed = speed + 3;
+            speed = sprintSpeed;
             Debug.Log((speed));
         }
         else

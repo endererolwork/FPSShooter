@@ -24,7 +24,7 @@ public class PlayerHealth : MonoBehaviour
     private float durationTimer; //duration checker
     public GameObject panel;
     
-    
+    public GameObject healthBox;
     
     public void Start()
     {
@@ -95,9 +95,19 @@ public class PlayerHealth : MonoBehaviour
 
     public void RestoreHealth(float healAmount)
     {
-        health += healAmount;
-        lerpTimer = 0f;
-        
+        if (health == maxHealth)
+        {
+            health = maxHealth;
+        }
+        else
+        {
+            health += healAmount;
+            if (health > maxHealth)
+            {
+                health = maxHealth;
+            }
+        }
+        lerpTimer = 0f;   
     }
 
     public void IncreaseHealth(int level)
@@ -109,5 +119,17 @@ public class PlayerHealth : MonoBehaviour
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void HealthBox()
+    {
+        if (health == maxHealth)
+        {
+            healthBox.SetActive(false);
+        }
+        else
+        {
+            healthBox.SetActive(true);
+        }
     }
 }

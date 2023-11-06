@@ -92,9 +92,19 @@ public class LevelSystem : MonoBehaviour
     public void LevelUp()
     {
         level++;
+
+        if (level == 1)
+        {
+            requiredXP = 100;
+        }
+        else
+        {
+            requiredXP = 100 + (level - 1) * 200;
+        }
+        
         frontXPBar.fillAmount = 0f;
         backXpBar.fillAmount = 0f;
-        currentXP = Mathf.RoundToInt(currentXP - requiredXP);
+        currentXP = 0;
         GetComponent<PlayerHealth>().IncreaseHealth(level);
         GetComponent<PlayerAttack>().IncreaseMaxAmmo();
         levelText.text = "Level " + level;
